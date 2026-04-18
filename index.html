@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ariel Tossa — Monteur Vidéo Freelance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ===========================
+       CSS VARIABLES & RESET
+    =========================== */
+    :root {
+      --bg:        #080b10;
+      --bg2:       #0d1117;
+      --bg3:       #111620;
+      --card:      #141a26;
+      --border:    rgba(0,255,160,0.12);
+      --neon:      #00ffa3;
+      --neon2:     #00c8ff;
+      --orange:    #ff6b2b;
+      --text:      #e8edf5;
+      --muted:     #6b7a96;
+      --white:     #ffffff;
+      --grad:      linear-gradient(135deg, #00ffa3 0%, #00c8ff 100%);
+      --grad-hot:  linear-gradient(135deg, #ff6b2b 0%, #ff2d7a 100%);
+      --shadow-neon: 0 0 30px rgba(0,255,163,0.25), 0 0 60px rgba(0,255,163,0.1);
+      --radius:    16px;
+      --font-h:    'Syne', sans-serif;
+      --font-b:    'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===== NOISE TEXTURE OVERLAY ===== */
+    body::before {
+      content:'';
+      position:fixed;
+      inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events:none;
+      z-index:0;
+      opacity:.4;
+    }
+
+    /* ===========================
+       NAVBAR
+    =========================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 5%;
+      background: rgba(8,11,16,0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s ease;
+    }
+    .nav-logo {
+      font-family: var(--font-h);
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: color .2s;
+      letter-spacing: .5px;
+    }
+    .nav-links a:hover { color: var(--neon); }
+    .nav-cta {
+      background: var(--grad);
+      color: #000 !important;
+      padding: .5rem 1.3rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .85rem;
+      transition: box-shadow .3s, transform .2s !important;
+    }
+    .nav-cta:hover {
+      box-shadow: var(--shadow-neon);
+      transform: translateY(-1px);
+      color: #000 !important;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--neon);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    /* ===========================
+       HERO
+    =========================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 7% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Wrapper deux colonnes */
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+      width: 100%;
+      max-width: 1160px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---- PHOTO DE PROFIL ---- */
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      order: 2;
+    }
+
+    .hero-photo-ring {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    .hero-photo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--neon) 0deg,
+        var(--neon2) 120deg,
+        transparent 180deg,
+        var(--neon) 360deg
+      );
+      animation: spinRing 4s linear infinite;
+      z-index: 0;
+    }
+
+    .hero-photo-ring::after {
+      content: '';
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,163,0.18) 0%, transparent 70%);
+      z-index: -1;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes spinRing {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes pulseGlow {
+      0%,100% { transform: scale(1); opacity: .8; }
+      50%      { transform: scale(1.08); opacity: 1; }
+    }
+
+    .hero-photo-bg {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--bg);
+      z-index: 1;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 2;
+      box-shadow:
+        0 0 0 2px rgba(0,255,163,0.3),
+        0 8px 40px rgba(0,0,0,0.6);
+    }
+
+    /* REMPLACER ICI LA PHOTO DE PROFIL
+       Option 1 : URL en ligne  → src="https://monsite.com/photo.jpg"
+       Option 2 : fichier local → src="photo.jpg" (même dossier que index.html)
+    */
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .hero-photo img:hover { transform: scale(1.04); }
+
+    .hero-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #111620, #1a2235);
+      gap: .5rem;
+    }
+    .hero-photo-placeholder i {
+      font-size: 3.5rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-photo-placeholder span {
+      font-size: .72rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    /* Animated background glow orbs */
+    .hero::after {
+      content:'';
+      position:absolute;
+      width:600px; height:600px;
+      background: radial-gradient(circle, rgba(0,255,163,0.08) 0%, transparent 70%);
+      top:50%; left:50%;
+      transform: translate(-50%,-50%);
+      pointer-events:none;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    .orb {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(80px);
+      pointer-events:none;
+    }
+    .orb-1 {
+      width:400px; height:400px;
+      background: rgba(0,200,255,0.06);
+      top:-100px; right:-100px;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width:300px; height:300px;
+      background: rgba(0,255,163,0.05);
+      bottom:-80px; left:-80px;
+      animation: floatOrb 10s ease-in-out infinite reverse;
+    }
+    @keyframes floatOrb {
+      0%,100%{transform:translate(0,0);}
+      50%{transform:translate(30px,-30px);}
+    }
+    @keyframes pulse {
+      0%,100%{opacity:.6; transform:translate(-50%,-50%) scale(1);}
+      50%{opacity:1; transform:translate(-50%,-50%) scale(1.1);}
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      text-align: left;
+      order: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(0,255,163,0.08);
+      border: 1px solid rgba(0,255,163,0.2);
+      color: var(--neon);
+      padding: .4rem 1rem;
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content:'';
+      display:block;
+      width:8px; height:8px;
+      background:var(--neon);
+      border-radius:50%;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%,100%{opacity:1;} 50%{opacity:.2;}
+    }
+    .hero h1 {
+      font-family: var(--font-h);
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      margin-bottom: 1.4rem;
+      letter-spacing: -1.5px;
+    }
+    .hero h1 .accent {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 0 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-sub strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    /* ===========================
+       BUTTONS
+    =========================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .85rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .3s ease;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-b);
+      letter-spacing: .3px;
+    }
+    .btn-primary {
+      background: var(--grad);
+      color: #000;
+    }
+    .btn-primary:hover {
+      box-shadow: var(--shadow-neon);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--neon);
+      border: 1.5px solid rgba(0,255,163,0.4);
+    }
+    .btn-outline:hover {
+      background: rgba(0,255,163,0.08);
+      border-color: var(--neon);
+      box-shadow: 0 0 20px rgba(0,255,163,0.2);
+      transform: translateY(-2px);
+    }
+    .btn-wa {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+    }
+    .btn-wa:hover {
+      box-shadow: 0 0 30px rgba(37,211,102,0.35);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-orange {
+      background: var(--grad-hot);
+      color: white;
+    }
+    .btn-orange:hover {
+      box-shadow: 0 0 30px rgba(255,107,43,0.35);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* ===========================
+       SECTIONS COMMONS
+    =========================== */
+    section {
+      padding: 6rem 5%;
+      position: relative;
+    }
+    .section-label {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: .8rem;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-h);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ===========================
+       WHO I HELP
+    =========================== */
+    #qui-jaide {
+      background: var(--bg2);
+    }
+    .qui-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .qui-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .qui-card:hover {
+      border-color: rgba(0,255,163,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,255,163,0.08);
+    }
+    .qui-icon {
+      width: 44px; height: 44px;
+      background: rgba(0,255,163,0.1);
+      border-radius: 10px;
+      display: flex; align-items:center; justify-content:center;
+      color: var(--neon);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .qui-card p {
+      font-size: .95rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       POURQUOI VIDEO
+    =========================== */
+    #pourquoi {
+      background: var(--bg);
+    }
+    .pourquoi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+    .pourquoi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all .3s;
+    }
+    .pourquoi-card:hover {
+      border-color: rgba(0,200,255,0.35);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0,200,255,0.1);
+    }
+    .pourquoi-num {
+      font-family: var(--font-h);
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .pourquoi-card h3 {
+      font-family: var(--font-h);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .pourquoi-card p {
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* ===========================
+       SERVICES
+    =========================== */
+    #services {
+      background: var(--bg2);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all .35s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background: var(--grad);
+      opacity:0;
+      transition: opacity .35s;
+    }
+    .service-card:hover::before { opacity:.04; }
+    .service-card:hover {
+      border-color: rgba(0,255,163,0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,255,163,0.1);
+    }
+    .service-icon {
+      width: 54px; height: 54px;
+      background: rgba(0,255,163,0.1);
+      border-radius: 14px;
+      display: flex; align-items:center; justify-content:center;
+      color: var(--neon);
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      transition: background .3s, box-shadow .3s;
+    }
+    .service-card:hover .service-icon {
+      background: rgba(0,255,163,0.18);
+      box-shadow: 0 0 20px rgba(0,255,163,0.2);
+    }
+    .service-card h3 {
+      font-family: var(--font-h);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: .7rem;
+    }
+    .service-card p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       PORTFOLIO
+    =========================== */
+    #portfolio {
+      background: var(--bg);
+    }
+    .portfolio-filters {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 2.5rem 0 2rem;
+    }
+    .filter-btn {
+      padding: .5rem 1.3rem;
+      border-radius: 50px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+      font-family: var(--font-b);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(0,255,163,0.1);
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* VIDEO CARD */
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all .35s cubic-bezier(.4,0,.2,1);
+      position: relative;
+    }
+    .video-card:hover {
+      border-color: rgba(0,255,163,0.4);
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 50px rgba(0,255,163,0.12);
+    }
+    .video-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg3);
+      overflow: hidden;
+    }
+    /* REMPLACER ICI LA MINIATURE — mettre l'URL de l'image dans src */
+    .video-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .video-card:hover .video-thumb img {
+      transform: scale(1.06);
+    }
+    /* Placeholder si pas d'image */
+    .thumb-placeholder {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(135deg, #111620, #1a2235);
+    }
+    .thumb-placeholder i {
+      font-size: 3rem;
+      color: rgba(0,255,163,0.2);
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(.85);
+      width: 56px; height: 56px;
+      background: rgba(0,255,163,0.92);
+      border-radius: 50%;
+      display: flex; align-items:center; justify-content:center;
+      color: #000;
+      font-size: 1.2rem;
+      transition: all .3s;
+      box-shadow: 0 0 0 0 rgba(0,255,163,0.4);
+    }
+    .video-card:hover .play-btn {
+      transform: translate(-50%,-50%) scale(1);
+      box-shadow: 0 0 0 14px rgba(0,255,163,0.15);
+    }
+
+    .video-info {
+      padding: 1.2rem 1.4rem;
+    }
+    /* MODIFIER LE TITRE ICI */
+    .video-info h3 {
+      font-family: var(--font-h);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+    }
+    .video-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--neon);
+      background: rgba(0,255,163,0.1);
+      padding: .2rem .7rem;
+      border-radius: 50px;
+    }
+    .tag-podcast  { color: var(--neon2); background: rgba(0,200,255,0.1); }
+    .tag-facecam  { color: var(--orange); background: rgba(255,107,43,0.1); }
+    .tag-reels    { color: #c77dff; background: rgba(199,125,255,0.1); }
+
+    .portfolio-more {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    /* ===========================
+       MODAL VIDÉO
+    =========================== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 840px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: -16px; right: -16px;
+      width: 38px; height: 38px;
+      background: var(--neon);
+      border-radius: 50%;
+      display: flex; align-items:center; justify-content:center;
+      color: #000;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      font-weight: 700;
+      z-index: 10;
+      transition: transform .2s;
+    }
+    .modal-close:hover { transform: rotate(90deg) scale(1.1); }
+    .modal-video-wrap {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .modal-video-wrap iframe,
+    .modal-video-wrap video {
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .modal-title {
+      font-family: var(--font-h);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+
+    /* ===========================
+       OFFRES / PRICING
+    =========================== */
+    #offres {
+      background: var(--bg2);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .pricing-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .pricing-card.recommended {
+      border-color: rgba(0,255,163,0.4);
+      box-shadow: 0 0 40px rgba(0,255,163,0.08);
+    }
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(0,255,163,0.1);
+    }
+    .badge-rec {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--grad);
+      color: #000;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: .35rem 1.2rem;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .pricing-title {
+      font-family: var(--font-h);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: .5rem;
+    }
+    .pricing-desc {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: .7rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: .9rem;
+      color: var(--text);
+    }
+    .pricing-features li i {
+      color: var(--neon);
+      margin-top: 2px;
+      flex-shrink:0;
+    }
+    .pricing-table {
+      background: var(--bg3);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .pricing-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .75rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: .88rem;
+    }
+    .pricing-row:last-child { border-bottom: none; }
+    .pricing-row span:last-child {
+      font-weight: 700;
+      color: var(--neon);
+      font-family: var(--font-h);
+    }
+    .pricing-row .badge-offre {
+      font-size: .68rem;
+      background: rgba(0,255,163,0.12);
+      color: var(--neon);
+      padding: .15rem .5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      margin-left: .4rem;
+    }
+
+    /* ===========================
+       OBJECTIFS + MODALITÉS
+    =========================== */
+    #objectifs { background: var(--bg); }
+    .obj-flex {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+    .obj-list, .modal-list {
+      list-style: none;
+    }
+    .obj-list li, .modal-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .obj-list li:last-child, .modal-list li:last-child { border: none; }
+    .obj-num {
+      font-family: var(--font-h);
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      min-width: 40px;
+    }
+    .obj-list li div p, .modal-list li div p {
+      font-size: .95rem;
+      font-weight: 600;
+      margin-bottom: .2rem;
+    }
+    .obj-list li div span, .modal-list li div span {
+      font-size: .85rem;
+      color: var(--muted);
+    }
+    .modal-icon {
+      width: 42px; height: 42px;
+      background: rgba(0,200,255,0.1);
+      border-radius: 10px;
+      display: flex; align-items:center; justify-content:center;
+      color: var(--neon2);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+       CTA FINAL
+    =========================== */
+    #cta {
+      background: var(--bg2);
+      text-align: center;
+    }
+    .cta-inner {
+      background: var(--card);
+      border: 1px solid rgba(0,255,163,0.18);
+      border-radius: 24px;
+      padding: 5rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-inner::before {
+      content:'';
+      position:absolute;
+      width:500px; height:500px;
+      background: radial-gradient(circle, rgba(0,255,163,0.06) 0%, transparent 70%);
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+    .cta-inner h2 {
+      font-family: var(--font-h);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+    .cta-inner p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+    .cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.8rem;
+    }
+    .cta-email {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .cta-email a {
+      color: var(--neon2);
+      text-decoration: none;
+    }
+    .cta-email a:hover { text-decoration: underline; }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--font-h);
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-copy {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      color: var(--muted);
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--neon); }
+
+    /* ===========================
+       FLOATING WHATSAPP
+    =========================== */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 58px; height: 58px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border-radius: 50%;
+      display: flex; align-items:center; justify-content:center;
+      color: white;
+      font-size: 1.5rem;
+      z-index: 999;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: all .3s;
+      animation: waPop 2s ease-in-out infinite;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37,211,102,0.55);
+    }
+    @keyframes waPop {
+      0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4);}
+      50%{box-shadow:0 4px 30px rgba(37,211,102,0.7);}
+    }
+
+    /* ===========================
+       SCROLL REVEAL
+    =========================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===========================
+       DIVIDERS
+    =========================== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,163,0.2), transparent);
+      margin: 0 5%;
+    }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(8,11,16,0.97);
+        padding: 2rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .hamburger { display: flex; }
+      /* HERO MOBILE : colonne, photo en haut, texte centré */
+      .hero-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 2.5rem;
+      }
+      .hero-photo-wrap { order: 1; }
+      .hero-content { order: 2; text-align: center; max-width: 100%; }
+      .hero-photo-ring { width: 220px; height: 220px; }
+      .hero-btns { justify-content: center; }
+      .hero-sub { margin: 0 auto 2.5rem; }
+      .qui-grid { grid-template-columns: 1fr; }
+      .obj-flex { grid-template-columns: 1fr; }
+      .hero h1 { letter-spacing: -0.5px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+      .cta-inner { padding: 3.5rem 1.5rem; }
+    }
+
+    /* ===========================
+       STATS BAR
+    =========================== */
+    .stats-bar {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 5%;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-family: var(--font-h);
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .3rem;
+    }
+    .stat-item p {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===========================
+     NAVBAR
+=========================== -->
+<nav>
+  <div class="nav-logo">ARIEL TOSSA</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#qui-jaide">À propos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#offres">Offres</a></li>
+    <li><a href="https://wa.me/2290166187525?text=Bonjour%20je%20suis%20intéressé%20par%20vos%20services" target="_blank" class="nav-cta btn">Me contacter</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ===========================
+     HERO
+=========================== -->
+<section class="hero" id="home">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="hero-inner">
+
+    <!-- COLONNE GAUCHE : Texte -->
+    <div class="hero-content">
+      <div class="hero-badge">✦ Disponible pour de nouveaux projets</div>
+      <!-- MODIFIER LE TITRE ICI -->
+      <h1>
+        Je transforme vos idées<br>en vidéos qui <span class="accent">captivent</span><br>et convertissent
+      </h1>
+      <p class="hero-sub">
+        <strong>Montage vidéo professionnel · Sound design · Motion design</strong><br>
+        Pour créateurs, entrepreneurs et marques qui veulent un impact réel.
+      </p>
+      <div class="hero-btns">
+        <a href="#services" class="btn btn-primary">
+          <i class="fas fa-play"></i> Voir mes services
+        </a>
+        <!-- MODIFIER LE LIEN WHATSAPP ICI -->
+        <a href="https://wa.me/2290166187525?text=Bonjour%20je%20suis%20intéressé%20par%20vos%20services" target="_blank" class="btn btn-wa">
+          <i class="fab fa-whatsapp"></i> Me contacter
+        </a>
+      </div>
+    </div>
+
+    <!-- COLONNE DROITE : Photo de profil -->
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring">
+        <!-- Fond masque (cache l'arc transparent du conic-gradient) -->
+        <div class="hero-photo-bg"></div>
+
+        <!-- =====================================================
+             REMPLACER ICI LA PHOTO DE PROFIL
+             ↓ Décommenter et remplir l'une des deux options ↓
+
+             Option 1 — Image en ligne (URL web) :
+             <div class="hero-photo">
+               <img src="https://example.com/votre-photo.jpg" alt="Ariel Tossa — Monteur Vidéo">
+             </div>
+
+             Option 2 — Fichier local (même dossier que index.html) :
+             <div class="hero-photo">
+               <img src="photo-profil.jpg" alt="Ariel Tossa — Monteur Vidéo">
+             </div>
+        ====================================================== -->
+
+        <!-- Placeholder affiché tant que la photo n'est pas ajoutée -->
+        <div class="hero-photo">
+          <div class="hero-photo-placeholder">
+            <i class="fas fa-user-tie"></i>
+            <span>Votre photo ici</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIN COLONNE DROITE -->
+
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <h3>50+</h3>
+    <p>Vidéos réalisées</p>
+  </div>
+  <div class="stat-item">
+    <h3>100%</h3>
+    <p>Clients satisfaits</p>
+  </div>
+  <div class="stat-item">
+    <h3>3</h3>
+    <p>Plateformes maîtrisées</p>
+  </div>
+  <div class="stat-item">
+    <h3>48h</h3>
+    <p>Délai de livraison</p>
+  </div>
+</div>
+
+<!-- ===========================
+     QUI J'AIDE
+=========================== -->
+<section id="qui-jaide">
+  <div class="text-center">
+    <span class="section-label">✦ Ma clientèle</span>
+    <h2 class="section-title">Qui j'aide ?</h2>
+    <p class="section-sub">J'accompagne les coachs, e-commerçants, créateurs de contenu et influenceurs.</p>
+  </div>
+  <div class="qui-grid reveal">
+    <div class="qui-card">
+      <div class="qui-icon"><i class="fas fa-video"></i></div>
+      <p>Ceux qui ont du <strong>mal à créer du contenu vidéo</strong> régulièrement et manquent de temps.</p>
+    </div>
+    <div class="qui-card">
+      <div class="qui-icon"><i class="fas fa-chart-line"></i></div>
+      <p>Ceux qui veulent <strong>améliorer leur visibilité</strong> sur TikTok, Instagram ou LinkedIn.</p>
+    </div>
+    <div class="qui-card">
+      <div class="qui-icon"><i class="fas fa-rocket"></i></div>
+      <p>Ceux qui veulent <strong>se lancer sans compétences</strong> en montage vidéo.</p>
+    </div>
+    <div class="qui-card">
+      <div class="qui-icon"><i class="fas fa-users"></i></div>
+      <p>Ceux qui veulent <strong>attirer leurs premiers clients</strong> grâce à la vidéo professionnelle.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===========================
+     POURQUOI VIDEO
+=========================== -->
+<section id="pourquoi">
+  <div class="text-center">
+    <span class="section-label">✦ La puissance de la vidéo</span>
+    <h2 class="section-title">Pourquoi la vidéo ?</h2>
+    <p class="section-sub">La vidéo est l'outil le plus puissant pour développer votre présence en ligne.</p>
+  </div>
+  <div class="pourquoi-grid reveal">
+    <div class="pourquoi-card">
+      <div class="pourquoi-num">01</div>
+      <h3>Créer du lien</h3>
+      <p>Connectez-vous authentiquement avec votre audience</p>
+    </div>
+    <div class="pourquoi-card">
+      <div class="pourquoi-num">02</div>
+      <h3>Être mémorable</h3>
+      <p>Restez dans l'esprit de vos prospects longtemps après</p>
+    </div>
+    <div class="pourquoi-card">
+      <div class="pourquoi-num">03</div>
+      <h3>Toucher plus</h3>
+      <p>Multipliez votre portée sur toutes les plateformes</p>
+    </div>
+    <div class="pourquoi-card">
+      <div class="pourquoi-num">04</div>
+      <h3>Montrer l'expertise</h3>
+      <p>Démontrez votre valeur avant même la vente</p>
+    </div>
+    <div class="pourquoi-card">
+      <div class="pourquoi-num">05</div>
+      <h3>Générer des clients</h3>
+      <p>Convertissez les spectateurs en acheteurs fidèles</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===========================
+     SERVICES
+=========================== -->
+<section id="services">
+  <div class="text-center">
+    <span class="section-label">✦ Ce que je fais</span>
+    <h2 class="section-title">Mes services</h2>
+    <p class="section-sub">Des productions vidéo sur-mesure pour booster votre présence digitale.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon"><i class="fab fa-tiktok"></i></div>
+      <!-- MODIFIER LE NOM DU SERVICE ICI -->
+      <h3>Montage TikTok / Reels / Shorts</h3>
+      <p>Cuts dynamiques, sous-titres animés, effets tendance pour maximiser l'engagement et la viralité.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-microphone-alt"></i></div>
+      <h3>Montage de podcasts</h3>
+      <p>Rendu audio pro, découpes précises, intégration de jingles, visuels d'accompagnement.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-user-circle"></i></div>
+      <h3>Vidéos face cam</h3>
+      <p>Étalonnage, B-rolls, transitions soignées pour donner un look professionnel à vos contenus.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
+      <h3>Création de contenu + CM</h3>
+      <p>Stratégie éditoriale, publication, gestion de communauté pour une présence cohérente et impactante.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     PORTFOLIO
+=========================== -->
+<section id="portfolio">
+  <div class="text-center">
+    <span class="section-label">✦ Mon travail</span>
+    <h2 class="section-title">Mes réalisations</h2>
+    <p class="section-sub">Des vidéos conçues pour capter l'attention et convertir.</p>
+  </div>
+
+  <div class="portfolio-filters">
+    <button class="filter-btn active" data-filter="all">Tous</button>
+    <button class="filter-btn" data-filter="tiktok">TikTok</button>
+    <button class="filter-btn" data-filter="podcast">Podcast</button>
+    <button class="filter-btn" data-filter="reels">Reels</button>
+    <button class="filter-btn" data-filter="facecam">Face Cam</button>
+  </div>
+
+  <div class="portfolio-grid" id="portfolioGrid">
+
+    <!--
+    ============================================================
+    CARTE VIDÉO 1 — MODIFIER SELON VOS BESOINS
+    Pour ajouter une nouvelle vidéo, copiez tout ce bloc .video-card
+    ============================================================
+    -->
+    <div class="video-card reveal" data-category="tiktok"
+         data-video="https://www.youtube.com/embed/VIDEO_ID_1"
+         data-title="TikTok Viral — Créateur de contenu"
+         data-type="youtube"
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <!-- REMPLACER ICI LA MINIATURE : changer src par l'URL de votre image -->
+        <!-- <img src="URL_DE_VOTRE_MINIATURE_1.jpg" alt="Miniature vidéo 1"> -->
+        <div class="thumb-placeholder">
+          <i class="fab fa-tiktok"></i>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <!-- MODIFIER LE TITRE ICI -->
+        <h3>TikTok Viral — Créateur de contenu</h3>
+        <!-- MODIFIER LA CATÉGORIE ICI : tiktok / podcast / reels / facecam -->
+        <span class="video-tag">TikTok</span>
+      </div>
+    </div>
+
+    <!--
+    ============================================================
+    CARTE VIDÉO 2
+    ============================================================
+    -->
+    <div class="video-card reveal" data-category="reels"
+         data-video="https://www.youtube.com/embed/VIDEO_ID_2"
+         data-title="Instagram Reel — E-commerce"
+         data-type="youtube"
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <!-- REMPLACER ICI LA MINIATURE -->
+        <!-- <img src="URL_DE_VOTRE_MINIATURE_2.jpg" alt="Miniature vidéo 2"> -->
+        <div class="thumb-placeholder">
+          <i class="fab fa-instagram"></i>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <!-- MODIFIER LE TITRE ICI -->
+        <h3>Instagram Reel — E-commerce</h3>
+        <span class="video-tag tag-reels">Reels</span>
+      </div>
+    </div>
+
+    <!--
+    ============================================================
+    CARTE VIDÉO 3
+    ============================================================
+    -->
+    <div class="video-card reveal" data-category="podcast"
+         data-video="https://www.youtube.com/embed/VIDEO_ID_3"
+         data-title="Podcast — Épisode Business"
+         data-type="youtube"
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <!-- REMPLACER ICI LA MINIATURE -->
+        <!-- <img src="URL_DE_VOTRE_MINIATURE_3.jpg" alt="Miniature vidéo 3"> -->
+        <div class="thumb-placeholder">
+          <i class="fas fa-microphone-alt"></i>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <!-- MODIFIER LE TITRE ICI -->
+        <h3>Podcast — Épisode Business</h3>
+        <span class="video-tag tag-podcast">Podcast</span>
+      </div>
+    </div>
+
+    <!--
+    ============================================================
+    CARTE VIDÉO 4
+    ============================================================
+    -->
+    <div class="video-card reveal" data-category="facecam"
+         data-video="https://www.youtube.com/embed/VIDEO_ID_4"
+         data-title="Face Cam — Coach en ligne"
+         data-type="youtube"
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <!-- REMPLACER ICI LA MINIATURE -->
+        <!-- <img src="URL_DE_VOTRE_MINIATURE_4.jpg" alt="Miniature vidéo 4"> -->
+        <div class="thumb-placeholder">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <!-- MODIFIER LE TITRE ICI -->
+        <h3>Face Cam — Coach en ligne</h3>
+        <span class="video-tag tag-facecam">Face Cam</span>
+      </div>
+    </div>
+
+    <!--
+    ============================================================
+    CARTE VIDÉO 5
+    ============================================================
+    -->
+    <div class="video-card reveal" data-category="tiktok"
+         data-video="https://www.youtube.com/embed/VIDEO_ID_5"
+         data-title="TikTok — Storytelling"
+         data-type="youtube"
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <!-- REMPLACER ICI LA MINIATURE -->
+        <!-- <img src="URL_DE_VOTRE_MINIATURE_5.jpg" alt="Miniature vidéo 5"> -->
+        <div class="thumb-placeholder">
+          <i class="fab fa-tiktok"></i>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <!-- MODIFIER LE TITRE ICI -->
+        <h3>TikTok — Storytelling Brand</h3>
+        <span class="video-tag">TikTok</span>
+      </div>
+    </div>
+
+    <!--
+    ============================================================
+    CARTE VIDÉO 6
+    EXEMPLE AVEC FICHIER MP4 DIRECT
+    ============================================================
+    -->
+    <div class="video-card reveal" data-category="reels"
+         data-video="REMPLACER_PAR_URL_DU_FICHIER.mp4"
+         data-title="Reel — Lancement de produit"
+         data-type="mp4"
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <!-- REMPLACER ICI LA MINIATURE -->
+        <!-- <img src="URL_DE_VOTRE_MINIATURE_6.jpg" alt="Miniature vidéo 6"> -->
+        <div class="thumb-placeholder">
+          <i class="fab fa-instagram"></i>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <!-- MODIFIER LE TITRE ICI -->
+        <h3>Reel — Lancement de produit</h3>
+        <span class="video-tag tag-reels">Reels</span>
+      </div>
+    </div>
+
+    <!--
+    ============================================================
+    AJOUTER UNE NOUVELLE VIDÉO :
+    Copiez et collez ce bloc ci-dessous en remplaçant les valeurs
+
+    <div class="video-card reveal" data-category="CATÉGORIE"
+         data-video="LIEN_YOUTUBE_OU_MP4"
+         data-title="TITRE DE LA VIDÉO"
+         data-type="youtube"  (ou "mp4")
+         onclick="openModal(this)">
+      <div class="video-thumb">
+        <img src="URL_MINIATURE.jpg" alt="Description">
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="video-info">
+        <h3>TITRE DE LA VIDÉO</h3>
+        <span class="video-tag">CATÉGORIE</span>
+      </div>
+    </div>
+    ============================================================
+    -->
+
+  </div>
+
+  <div class="portfolio-more reveal">
+    <!-- MODIFIER LE LIEN WHATSAPP ICI -->
+    <a href="https://wa.me/2290166187525?text=Bonjour%2C%20je%20voudrais%20voir%20plus%20de%20vos%20projets" target="_blank" class="btn btn-outline" style="font-size:1rem; padding:1rem 2.5rem;">
+      <i class="fab fa-whatsapp"></i> Voir plus de projets
+    </a>
+  </div>
+</section>
+
+<!-- MODAL VIDÉO -->
+<div class="modal-overlay" id="videoModal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-video-wrap" id="modalVideoWrap"></div>
+    <p class="modal-title" id="modalTitle"></p>
+  </div>
+</div>
+
+<!-- ===========================
+     OFFRES
+=========================== -->
+<section id="offres">
+  <div class="text-center">
+    <span class="section-label">✦ Investissez dans votre croissance</span>
+    <h2 class="section-title">Mes offres</h2>
+    <p class="section-sub">Des formules claires et flexibles pour tous les profils.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- OFFRE BASIQUE -->
+    <div class="pricing-card reveal">
+      <h2 class="pricing-title">Montage Vidéo</h2>
+      <p class="pricing-desc">Idéale pour ceux qui veulent des vidéos prêtes à publier, sans prise de tête.</p>
+      <ul class="pricing-features">
+        <li><i class="fas fa-check-circle"></i> Sous-titres animés</li>
+        <li><i class="fas fa-check-circle"></i> Cuts dynamiques & rythme optimisé</li>
+        <li><i class="fas fa-check-circle"></i> Effets visuels modernes</li>
+        <li><i class="fas fa-check-circle"></i> Sons & emojis intégrés</li>
+      </ul>
+      <!-- MODIFIER LES TARIFS ICI -->
+      <div class="pricing-table">
+        <div class="pricing-row"><span>1 vidéo</span><span>30€</span></div>
+        <div class="pricing-row"><span>10 vidéos <span class="badge-offre">+2 offertes</span></span><span>300€</span></div>
+        <div class="pricing-row"><span>30 vidéos</span><span>900€</span></div>
+        <div class="pricing-row"><span>3 mois</span><span>800€/mois</span></div>
+        <div class="pricing-row"><span>6 mois</span><span>700€/mois</span></div>
+      </div>
+      <a href="https://wa.me/2290166187525?text=Bonjour%2C%20je%20suis%20intéressé%20par%20l'offre%20Montage%20Vidéo" target="_blank" class="btn btn-outline" style="width:100%;justify-content:center;">
+        <i class="fab fa-whatsapp"></i> Je commence
+      </a>
+    </div>
+
+    <!-- OFFRE PREMIUM -->
+    <div class="pricing-card recommended reveal">
+      <div class="badge-rec">⭐ RECOMMANDÉ</div>
+      <h2 class="pricing-title">Montage + Stratégie</h2>
+      <p class="pricing-desc">Idéale pour attirer, engager et convertir avec une stratégie complète et sur-mesure.</p>
+      <ul class="pricing-features">
+        <li><i class="fas fa-check-circle"></i> Recherche de sujets viraux</li>
+        <li><i class="fas fa-check-circle"></i> Écriture de scripts + hooks</li>
+        <li><i class="fas fa-check-circle"></i> Montage optimisé conversion</li>
+        <li><i class="fas fa-check-circle"></i> Optimisation réseaux sociaux</li>
+        <li><i class="fas fa-check-circle"></i> Tout de l'offre Basique inclus</li>
+      </ul>
+      <!-- MODIFIER LES TARIFS ICI -->
+      <div class="pricing-table">
+        <div class="pricing-row"><span>1 vidéo</span><span>50€</span></div>
+        <div class="pricing-row"><span>10 vidéos <span class="badge-offre">+2 offertes</span></span><span>500€</span></div>
+        <div class="pricing-row"><span>30 vidéos</span><span>1 500€</span></div>
+        <div class="pricing-row"><span>3 mois</span><span>1 300€/mois</span></div>
+        <div class="pricing-row"><span>6 mois</span><span>1 100€/mois</span></div>
+      </div>
+      <a href="https://wa.me/2290166187525?text=Bonjour%2C%20je%20suis%20intéressé%20par%20l'offre%20Premium" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;">
+        <i class="fab fa-whatsapp"></i> Je veux le Premium
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===========================
+     OBJECTIFS + MODALITÉS
+=========================== -->
+<section id="objectifs">
+  <div class="text-center">
+    <span class="section-label">✦ Comment ça marche</span>
+    <h2 class="section-title">Objectifs & Modalités</h2>
+  </div>
+  <div class="obj-flex">
+    <!-- Objectifs -->
+    <div class="reveal">
+      <h3 style="font-family:var(--font-h);font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;color:var(--muted);">MES OBJECTIFS POUR VOUS</h3>
+      <ul class="obj-list">
+        <li>
+          <span class="obj-num">01</span>
+          <div>
+            <p>Capter l'attention</p>
+            <span>Hooks et premières secondes irrésistibles</span>
+          </div>
+        </li>
+        <li>
+          <span class="obj-num">02</span>
+          <div>
+            <p>Maintenir l'engagement</p>
+            <span>Rythme et narration qui retiennent jusqu'au bout</span>
+          </div>
+        </li>
+        <li>
+          <span class="obj-num">03</span>
+          <div>
+            <p>Augmenter la visibilité</p>
+            <span>Optimisation pour chaque algorithme de plateforme</span>
+          </div>
+        </li>
+        <li>
+          <span class="obj-num">04</span>
+          <div>
+            <p>Convertir en clients</p>
+            <span>Call-to-action efficaces intégrés naturellement</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Modalités -->
+    <div class="reveal">
+      <h3 style="font-family:var(--font-h);font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;color:var(--muted);">MODALITÉS DE TRAVAIL</h3>
+      <ul class="modal-list">
+        <li>
+          <div class="modal-icon"><i class="fas fa-file-signature"></i></div>
+          <div>
+            <p>Contrat signé</p>
+            <span>On définit ensemble le scope et les livrables attendus</span>
+          </div>
+        </li>
+        <li>
+          <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
+          <div>
+            <p>50% au démarrage</p>
+            <span>Acompte pour sécuriser votre place et lancer la production</span>
+          </div>
+        </li>
+        <li>
+          <div class="modal-icon"><i class="fas fa-check-double"></i></div>
+          <div>
+            <p>50% à la livraison</p>
+            <span>Solde réglé une fois les vidéos validées et livrées</span>
+          </div>
+        </li>
+        <li>
+          <div class="modal-icon"><i class="fas fa-comments"></i></div>
+          <div>
+            <p>Révisions incluses</p>
+            <span>Vos retours sont pris en compte jusqu'à votre satisfaction</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     CTA FINAL
+=========================== -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <h2>Tu veux passer au<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">niveau supérieur ?</span></h2>
+    <p>Ensemble, on crée des vidéos qui font vraiment la différence. Discutons de ton projet dès maintenant.</p>
+    <div class="cta-btns">
+      <!-- MODIFIER LE LIEN WHATSAPP ICI -->
+      <a href="https://wa.me/2290166187525?text=Bonjour%20je%20suis%20intéressé%20par%20vos%20services" target="_blank" class="btn btn-wa" style="font-size:1rem;padding:1rem 2.5rem;">
+        <i class="fab fa-whatsapp"></i> Démarrer sur WhatsApp
+      </a>
+      <!-- MODIFIER L'EMAIL ICI -->
+      <a href="mailto:tossaariel148@gmail.com" class="btn btn-outline" style="font-size:1rem;padding:1rem 2.5rem;">
+        <i class="fas fa-envelope"></i> Envoyer un email
+      </a>
+    </div>
+    <!-- MODIFIER L'EMAIL ICI -->
+    <p class="cta-email">Ou écrivez-moi directement : <a href="mailto:tossaariel148@gmail.com">tossaariel148@gmail.com</a></p>
+  </div>
+</section>
+
+<!-- ===========================
+     FOOTER
+=========================== -->
+<footer>
+  <div class="footer-logo">ARIEL TOSSA</div>
+  <p class="footer-copy">© 2025 Ariel Tossa. Tous droits réservés.</p>
+  <div class="footer-links">
+    <!-- MODIFIER LES LIENS RÉSEAUX SOCIAUX ICI -->
+    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/2290166187525" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="mailto:tossaariel148@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+  </div>
+</footer>
+
+<!-- BOUTON WHATSAPP FLOTTANT -->
+<!-- MODIFIER LE LIEN WHATSAPP ICI -->
+<a href="https://wa.me/2290166187525?text=Bonjour%20je%20suis%20intéressé%20par%20vos%20services" target="_blank" class="wa-float" title="Contactez-moi sur WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ===========================
+     JAVASCRIPT
+=========================== -->
+<script>
+  /* ===== NAVBAR MOBILE ===== */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  // Fermer le menu au clic sur un lien
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  /* ===== SCROLL REVEAL ===== */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ===== PORTFOLIO FILTERS ===== */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.video-card').forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? 'block' : 'none';
+        if (match) {
+          card.style.animation = 'fadeIn .3s ease forwards';
+        }
+      });
+    });
+  });
+
+  /* ===== MODAL VIDÉO ===== */
+  function openModal(card) {
+    const modal = document.getElementById('videoModal');
+    const wrap  = document.getElementById('modalVideoWrap');
+    const title = document.getElementById('modalTitle');
+    const src   = card.dataset.video;
+    const type  = card.dataset.type;
+
+    title.textContent = card.dataset.title;
+
+    if (type === 'mp4') {
+      // LECTURE FICHIER MP4 DIRECT
+      wrap.innerHTML = `<video controls autoplay src="${src}"></video>`;
+    } else {
+      // LECTURE YOUTUBE / IFRAME
+      // Pour YouTube, ajouter ?autoplay=1 au lien embed
+      const embedUrl = src.includes('?') ? src + '&autoplay=1' : src + '?autoplay=1';
+      wrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen allow="autoplay"></iframe>`;
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('videoModal');
+    const wrap  = document.getElementById('modalVideoWrap');
+    modal.classList.remove('active');
+    wrap.innerHTML = ''; // Stoppe la lecture
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(event) {
+    if (event.target === document.getElementById('videoModal')) {
+      closeModal();
+    }
+  }
+
+  // Fermer avec Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* ===== NAVBAR SCROLL STYLE ===== */
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.padding = '0.7rem 5%';
+    } else {
+      nav.style.padding = '1.1rem 5%';
+    }
+  });
+
+  /* ===== FADE IN ANIMATION ===== */
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(10px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+
+</body>
+</html>
